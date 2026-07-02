@@ -1,9 +1,12 @@
 import hashlib
 import os
 import shutil
+import logging
 from pathlib import Path
 from typing import List
 from uuid import UUID
+
+logger = logging.getLogger(__name__)
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
