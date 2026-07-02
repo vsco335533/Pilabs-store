@@ -54,10 +54,42 @@ class AdminService:
         return category
 
     async def create_app(self, db: AsyncSession, data: AppCreate, admin_id: UUID) -> App:
-        # Check package name
-        existing_pkg = await app_repo.get_by_package_name(db, data.package_name)
-        if existing_pkg:
-            raise ConflictException("An application with this package name already exists")
+        # Check package name (including soft-deleted ones)
+        pkg_query = select(App).where(App.package_name == data.package_name)
+        pkg_result = await db.execute(pkg_query)
+        existing_app = pkg_result.scalar_one_or_none()
+
+        if existing_app:
+            if existing_app.deleted_at is None:
+                raise ConflictException("An application with this package name already exists")
+            
+            # Reactivate and update the soft-deleted app
+            existing_app.deleted_at = None
+            existing_app.is_active = True
+            existing_app.name = data.name
+            existing_app.developer = data.developer
+            existing_app.description = data.description
+            existing_app.logo_url = data.logo_url
+            existing_app.screenshots = data.screenshots or []
+            existing_app.category_id = data.category_id
+            existing_app.updated_by = admin_id
+            
+            db.add(existing_app)
+            await db.commit()
+            await db.refresh(existing_app, ["category", "versions"])
+            
+            # Audit
+            await audit_log_repo.create(
+                db,
+                obj_in={
+                    "user_id": admin_id,
+                    "action": "restore_app",
+                    "resource": "apps",
+                    "new_values": {"name": existing_app.name, "package_name": existing_app.package_name}
+                }
+            )
+            await db.commit()
+            return existing_app
 
         # Validate category
         category = await category_repo.get(db, data.category_id)
@@ -65,9 +97,10 @@ class AdminService:
             raise NotFoundException("Category not found")
 
         slug = slugify(data.name)
-        # Check slug conflicts
-        existing_slug = await app_repo.get_by_slug(db, slug)
-        if existing_slug:
+        # Check slug conflicts (including soft-deleted ones)
+        slug_query = select(App).where(App.slug == slug)
+        slug_result = await db.execute(slug_query)
+        if slug_result.scalar_one_or_none():
             slug = f"{slug}-{str(uuid4())[:8]}"
 
         app_in = {
