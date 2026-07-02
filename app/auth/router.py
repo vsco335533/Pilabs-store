@@ -20,9 +20,10 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=APIResponse[UserResponse])
 async def register(data: RegisterRequest, db: AsyncSession = Depends(get_async_db)):
-    user = await auth_service.register(db, data)
+    user, otp_code = await auth_service.register(db, data)
     await db.refresh(user, ["role"])
     user_res = UserResponse.model_validate(user)
+    user_res.otp_code = otp_code
     return APIResponse(
         success=True,
         message="Registration successful. Verification OTP sent to email.",

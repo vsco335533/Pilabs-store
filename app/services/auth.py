@@ -104,7 +104,7 @@ class AuthService:
 
         # Fetch user with selectinload(User.role) to prevent MissingGreenlet in pydantic serialization
         refreshed_user = await user_repo.get(db, user.id)
-        return refreshed_user
+        return refreshed_user, otp_code
 
     async def login(
         self,

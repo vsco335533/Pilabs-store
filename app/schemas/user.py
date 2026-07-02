@@ -23,6 +23,7 @@ class UserResponse(BaseModel):
     role: RoleResponse
     created_at: datetime
     updated_at: datetime
+    otp_code: Optional[str] = None
 
     class Config:
         from_attributes = True
