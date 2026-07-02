@@ -190,8 +190,16 @@ async def upload_apk(
     sha256_checksum = sha256_hash.hexdigest()
     
     # Trigger background anti-virus scanning
-    from app.core.celery import scan_apk_file
-    scan_apk_file.delay(str(file_path.resolve()))
+    try:
+        from app.core.celery import scan_apk_file
+        scan_apk_file.delay(str(file_path.resolve()))
+    except Exception as e:
+        logger.warning(f"Failed to queue background virus scan via Celery: {e}. Running scan synchronously.")
+        try:
+            from app.utils.scanner import scan_file
+            scan_file(str(file_path.resolve()))
+        except Exception as scan_err:
+            logger.error(f"Synchronous scan failed: {scan_err}")
     
     # Return file url (will be served statically by main FastAPI app)
     # Using format: /static/apks/{filename}
