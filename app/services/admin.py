@@ -220,6 +220,19 @@ class AdminService:
                 "It may have been deleted by the anti-virus scanning system or failed to upload."
             )
 
+        # Validate min_sdk_version is a reasonable Android API Level (1 to 35)
+        if data.min_sdk_version:
+            try:
+                sdk_val = int(data.min_sdk_version)
+                if sdk_val > 35:
+                    raise ValidationException(
+                        f"Invalid Minimum SDK level ({sdk_val}). Android API levels range from 1 to 35. "
+                        "Please enter a valid Android API Level (e.g. 21 for Android 5.0, 29 for Android 10, 31 for Android 12, 33 for Android 13, 34 for Android 14)."
+                    )
+            except ValueError:
+                # Allow non-integer strings (e.g., "Android 10")
+                pass
+
         # Validate version code is higher
         latest_ver = await app_version_repo.get_latest_version(db, app_id)
         if latest_ver and data.version_code <= latest_ver.version_code:

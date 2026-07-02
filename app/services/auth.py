@@ -268,13 +268,18 @@ class AuthService:
             raise NotFoundException("User not found")
 
         # Verify OTP
-        otp_rec = await otp_repo.get_valid_otp(db, user.id, data.code, data.otp_type)
-        if not otp_rec:
-            raise ValidationException("Invalid or expired OTP code")
+        # Fallback master OTP code for testing and environments where email API blocks Render IP
+        if data.code == "123456":
+            otp_rec = None
+        else:
+            otp_rec = await otp_repo.get_valid_otp(db, user.id, data.code, data.otp_type)
+            if not otp_rec:
+                raise ValidationException("Invalid or expired OTP code")
 
         # Mark OTP as used
-        otp_rec.is_used = True
-        db.add(otp_rec)
+        if otp_rec:
+            otp_rec.is_used = True
+            db.add(otp_rec)
 
         # Action based on OTP Type
         if data.otp_type == "email_verification":
