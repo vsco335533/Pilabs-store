@@ -1,0 +1,19 @@
+2026-07-01 10:51:54,403 [INFO] audit - AUDIT: User logged in: f58da703-d053-4391-a206-feacf7fd4c9a (superadmin@enterprise.com) from 172.18.0.1
+2026-07-01 11:03:51,548 [INFO] audit - AUDIT: User logged in: f58da703-d053-4391-a206-feacf7fd4c9a (superadmin@enterprise.com) from 172.18.0.1
+2026-07-01 11:06:20,176 [INFO] audit - AUDIT: User logged in: f58da703-d053-4391-a206-feacf7fd4c9a (superadmin@enterprise.com) from 172.18.0.1
+2026-07-01 11:06:45,431 [INFO] audit - AUDIT: User logged in: f58da703-d053-4391-a206-feacf7fd4c9a (superadmin@enterprise.com) from 172.18.0.1
+2026-07-01 12:30:31,257 [INFO] audit - AUDIT: User registered successfully: 11df02a9-5bbc-4db3-be39-ddba1bd616df (saikrishna.m@pilabs.cc)
+2026-07-01 18:07:26,096 [INFO] audit - AUDIT: User logged in: 11df02a9-5bbc-4db3-be39-ddba1bd616df (saikrishna.m@pilabs.cc) from 192.168.1.2
+2026-07-01 22:19:05,502 [INFO] audit - AUDIT: User logged in: 11df02a9-5bbc-4db3-be39-ddba1bd616df (saikrishna.m@pilabs.cc) from 127.0.0.1
+2026-07-01 22:22:03,695 [INFO] audit - AUDIT: User logged in: 11df02a9-5bbc-4db3-be39-ddba1bd616df (saikrishna.m@pilabs.cc) from 192.168.0.128
+2026-07-01 22:35:56,222 [INFO] audit - AUDIT: User logged in: 2d9ff090-80bd-4bd5-9d0b-17f007bd9f69 (superadmin@enterprise.com) from 127.0.0.1
+2026-07-01 22:39:32,158 [INFO] audit - AUDIT: User logged in: 2d9ff090-80bd-4bd5-9d0b-17f007bd9f69 (superadmin@enterprise.com) from 192.168.0.128
+2026-07-01 23:11:49,098 [INFO] audit - AUDIT: User logged in: 2d9ff090-80bd-4bd5-9d0b-17f007bd9f69 (superadmin@enterprise.com) from 192.168.0.128
+2026-07-01 23:33:45,698 [INFO] audit - AUDIT: User logged in: 11df02a9-5bbc-4db3-be39-ddba1bd616df (saikrishna.m@pilabs.cc) from 192.168.0.128
+2026-07-01 23:42:41,788 [INFO] audit - AUDIT: User logged in: 2d9ff090-80bd-4bd5-9d0b-17f007bd9f69 (superadmin@enterprise.com) from 192.168.0.128
+2026-07-02 11:12:47,512 [WARNING] audit - AUDIT WARN: Reuse of revoked refresh token detected for User: 2d9ff090-80bd-4bd5-9d0b-17f007bd9f69. Revoked all tokens.
+2026-07-02 11:13:01,762 [INFO] audit - AUDIT: User logged in: 2d9ff090-80bd-4bd5-9d0b-17f007bd9f69 (superadmin@enterprise.com) from 192.168.1.2
+2026-07-02 11:16:15,250 [INFO] audit - AUDIT: User registered successfully: f795f08a-c9e0-4e7a-813b-1a58da7d56cf (sam@gmail.com)
+2026-07-02 11:18:23,971 [INFO] audit - AUDIT: User registered successfully: 0366c4f8-9708-4be7-9246-66cc2a69f158 (pratheen37@gamil.com)
+2026-07-02 11:33:34,667 [INFO] audit - AUDIT: User registered successfully: 0fc4c354-04f9-4d84-9646-ba69df6443cf (pratheen73@gmail.com)
+2026-07-02 11:35:39,177 [INFO] audit - AUDIT: User logged in: 0fc4c354-04f9-4d84-9646-ba69df6443cf (pratheen73@gmail.com) from 192.168.1.2
